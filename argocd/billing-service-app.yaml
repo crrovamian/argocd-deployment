@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: billing-service
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/mi-usuario/argocd-example
+    targetRevision: HEAD
+    path: apps/billing-service
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

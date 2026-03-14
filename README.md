@@ -41,3 +41,55 @@ Contraseña: (la obtenida en el paso 3)
 argocd login localhost:8080
 argocd account update-password
 ```
+
+## Estructura del repositorio
+
+```
+argocd-example/
+├── apps/                          # Manifiestos de las aplicaciones
+│   └── billing-service/
+│       ├── deployment.yaml
+│       ├── service.yaml
+│       └── ingress.yaml
+└── argocd/                        # Definiciones de Application ArgoCD
+    └── billing-service-app.yaml
+```
+
+## Flujo de GitOps
+
+1. **Build**: CI construye imagen y la sube al registry
+2. **Update**: Se actualiza la versión de la imagen en el repo Git
+3. **Sync**: ArgoCD detecta el cambio y despliega al cluster
+
+### Ejemplo: actualizar versión de imagen
+
+En `apps/billing-service/deployment.yaml`:
+
+```yaml
+# Antes
+image: myregistry/billing-service:1.0.0
+
+# Después de nuevo build
+image: myregistry/billing-service:1.1.0
+```
+
+Haces commit y push → ArgoCD sincroniza automáticamente.
+
+## Aplicar una Application
+
+```bash
+kubectl apply -f argocd/billing-service-app.yaml
+```
+
+Esto se ejecuta **una sola vez**. ArgoCD se encarga automáticamente de detectar cambios en Git y sincronizar al cluster.
+
+## Campos principales de una Application
+
+| Campo | Descripción |
+|-------|-------------|
+| `repoURL` | URL del repositorio Git |
+| `targetRevision` | Rama a monitorear (HEAD = main) |
+| `path` | Ruta donde están los manifiestos YAML |
+| `namespace` | Namespace donde se despliega |
+| `prune` | Elimina recursos que ya no están en Git |
+| `selfHeal` | Resincroniza si alguien cambia el cluster manualmente |
