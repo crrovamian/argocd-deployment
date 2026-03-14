@@ -16,9 +16,16 @@ spec:
     spec:
       containers:
       - name: billing-service
-        image: myregistry/billing-service:1.0.0
+        image: nginx:1.25
         ports:
-        - containerPort: 8080
+        - containerPort: 80
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: html-volume
+        configMap:
+          name: billing-service-html
         resources:
           limits:
             cpu: 500m

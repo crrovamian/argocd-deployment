@@ -48,6 +48,7 @@ argocd account update-password
 argocd-example/
 ├── apps/                          # Manifiestos de las aplicaciones
 │   └── billing-service/
+│       ├── configmap.yaml         # HTML con el mensaje
 │       ├── deployment.yaml
 │       ├── service.yaml
 │       └── ingress.yaml
@@ -61,19 +62,17 @@ argocd-example/
 2. **Update**: Se actualiza la versión de la imagen en el repo Git
 3. **Sync**: ArgoCD detecta el cambio y despliega al cluster
 
-### Ejemplo: actualizar versión de imagen
+### Ejemplo: actualizar mensaje para probar GitOps
 
-En `apps/billing-service/deployment.yaml`:
+El ejemplo usa imagen `nginx:1.25` con un HTML que muestra un mensaje. Para probar el flujo de GitOps, solo cambia el mensaje en `apps/billing-service/configmap.yaml`:
 
 ```yaml
-# Antes
-image: myregistry/billing-service:1.0.0
-
-# Después de nuevo build
-image: myregistry/billing-service:1.1.0
+data:
+  index.html: |
+    <h1>Billing Service - Hola mundo v1</h1>  # Cambia este valor
 ```
 
-Haces commit y push → ArgoCD sincroniza automáticamente.
+Cambia a `Hola mundo v2`, haz commit y push → ArgoCD sincroniza automáticamente → actualiza el HTML del pod.
 
 ## Aplicar una Application
 

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: billing-service-html
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Billing Service</title>
+        <style>
+            body { font-family: Arial; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+            h1 { color: #333; }
+        </style>
+    </head>
+    <body>
+        <h1>Billing Service - Hola mundo v1</h1>
+    </body>
+    </html>
