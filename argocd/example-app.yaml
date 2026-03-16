@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: billing-service
+  name: example-app
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://github.com/mi-usuario/argocd-example
+    repoURL: https://github.com/crrovamian/argocd-example
     targetRevision: HEAD
-    path: apps/example
+    path: apps/app
   destination:
     server: https://kubernetes.default.svc
     namespace: default

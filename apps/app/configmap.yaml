@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: example-app-html
+data:
+  generate.sh: |
+    #!/bin/sh
+    cat > /usr/share/nginx/html/index.html << EOF
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Example App</title>
+        <style>
+            body { font-family: Arial; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; flex-direction: column; }
+            h1 { color: #333; }
+            .info { color: #666; margin-top: 20px; }
+        </style>
+    </head>
+    <body>
+        <h1>Example App</h1>
+        <div class="info">
+            <p>Pod: $HOSTNAME</p>
+            <p>IP: $POD_IP</p>
+        </div>
+    </body>
+    </html>
+    EOF
+    exec nginx -g 'daemon off;'
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: example-app-html
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Example App</title>
+        <style>
+            body { font-family: Arial; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; flex-direction: column; }
+            h1 { color: #333; }
+            .info { color: #666; margin-top: 20px; }
+        </style>
+    </head>
+    <body>
+        <h1>Example App</h1>
+        <div class="info">
+            <p>Pod: LOADING...</p>
+            <p>IP: LOADING...</p>
+        </div>
+    </body>
+    </html>
