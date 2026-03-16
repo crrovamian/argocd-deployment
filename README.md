@@ -101,4 +101,10 @@ Para acceder al servicio desde el navegador, añade el host a tu `/etc/hosts`:
 echo "127.0.0.1 billing.example.com" | sudo tee -a /etc/hosts
 ```
 
+> ó
+
+```bash
+echo "$(minikube ip) billing.example.com" | sudo tee -a /etc/hosts # minikube
+```
+
 Esto te permitirá acceder a la aplicación en `http://billing.example.com` (el puerto del Ingress/Traefik, usualmente 80).
