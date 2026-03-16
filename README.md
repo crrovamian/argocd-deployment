@@ -92,3 +92,13 @@ Esto se ejecuta **una sola vez**. ArgoCD se encarga automáticamente de detectar
 | `namespace` | Namespace donde se despliega |
 | `prune` | Elimina recursos que ya no están en Git |
 | `selfHeal` | Resincroniza si alguien cambia el cluster manualmente |
+
+## Configurar hosts locales
+
+Para acceder al servicio desde el navegador, añade el host a tu `/etc/hosts`:
+
+```bash
+echo "127.0.0.1 billing.example.com" | sudo tee -a /etc/hosts
+```
+
+Esto te permitirá acceder a la aplicación en `http://billing.example.com` (el puerto del Ingress/Traefik, usualmente 80).

@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/mi-usuario/argocd-example
     targetRevision: HEAD
-    path: apps/billing-service
+    path: apps/example
   destination:
     server: https://kubernetes.default.svc
     namespace: default
